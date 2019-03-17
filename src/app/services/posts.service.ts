@@ -8,9 +8,26 @@ import * as firebase from 'firebase';
 
 export class PostsService {
 
-  posts: Post[];
+  posts: Post[] = [];
+  loveIts = [];
   postsSubject = new Subject<Post[]>();
 
+  love() {
+    this.loveIts;
+  }
+
+  emitPosts() {
+    this.postsSubject.next(this.posts);
+  }
+
+  getPosts() {
+    firebase.database().ref('/posts')
+      .on('value', (data) => {
+          this.posts = data.val() ? data.val() : [];
+          this.emitPosts();
+        }
+      );
+  }
 
   savePosts() {
     firebase.database().ref('/posts').set(this.posts);
@@ -19,10 +36,20 @@ export class PostsService {
   addPost(newPost: Post) {
     this.posts.push(newPost);
     this.savePosts();
+    this.emitPosts();
   }
 
   deletePost(post: Post) {
-    
+    const postIndexToRemove = this.posts.findIndex(
+      (postEl) => {
+        if(postEl === post) {
+          return true;
+        }
+      }
+    );
+    this.posts.splice(postIndexToRemove, 1);
+    this.savePosts();
+    this.emitPosts();
   }
 
 }

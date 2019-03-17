@@ -16,8 +16,6 @@ export class PostListItemComponent implements OnInit {
   @Input() dontLove: number=0;
   @Input() created_at: object;
 
-  
-
   constructor(private postsService: PostsService, private router: Router) { }
 
   ngOnInit() {
@@ -25,10 +23,12 @@ export class PostListItemComponent implements OnInit {
 
   loveIt() {
     this.loveIts ++;
+    this.postsService.love();
   }
 
   dontLoveIt() {
     this.dontLove ++;
+    this.postsService.love();
   }
 
   onDeletePost(post: Post) {

@@ -1,7 +1,8 @@
 <li [ngClass]="{'list-group-item': true,      
-              'list-group-item-success': loveIts > dontLove,
-              'list-group-item-danger': dontLove > loveIts,
-              'list-group-item-info': dontLove == loveIts && loveIts > 0}">
+              'list-group-item-success': loveIts > 0,
+              'list-group-item-danger': 0 > loveIts }">
+
+              <!-- 'list-group-item-info': dontLove == loveIts && loveIts > 0 -->
               
     <h2>{{ title }}
       <span style="position: absolute; right:10px;" >

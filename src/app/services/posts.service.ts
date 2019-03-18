@@ -12,8 +12,15 @@ export class PostsService {
   loveIts = [];
   postsSubject = new Subject<Post[]>();
 
-  love() {
-    this.loveIts;
+  love(post: Post) {
+    const postIndexToLove = this.posts.findIndex(
+      (postEl) => {
+        if(postEl === post) {
+          return true;
+        }
+      }
+    );
+    firebase.database().ref('child/posts').set(this.loveIts);
   }
 
   emitPosts() {

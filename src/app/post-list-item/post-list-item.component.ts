@@ -13,7 +13,7 @@ export class PostListItemComponent implements OnInit {
   @Input() title: string;
   @Input() content: string; 
   @Input() loveIts: number=0;
-  @Input() dontLove: number=0;
+  // @Input() dontLove: number=0;
   @Input() created_at: object;
 
   constructor(private postsService: PostsService, private router: Router) { }
@@ -23,12 +23,12 @@ export class PostListItemComponent implements OnInit {
 
   loveIt() {
     this.loveIts ++;
-    this.postsService.love();
+    // this.postsService.love(this.post);
   }
 
   dontLoveIt() {
-    this.dontLove ++;
-    this.postsService.love();
+    this.loveIts --;
+    // this.postsService.love();
   }
 
   onDeletePost(post: Post) {

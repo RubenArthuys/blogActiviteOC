@@ -8,19 +8,26 @@ import * as firebase from 'firebase';
 
 export class PostsService {
 
+  constructor() { }
+
   posts: Post[] = [];
-  loveIts = [];
+  loveIts: number;
   postsSubject = new Subject<Post[]>();
 
-  love(post: Post) {
-    const postIndexToLove = this.posts.findIndex(
-      (postEl) => {
-        if(postEl === post) {
-          return true;
-        }
-      }
-    );
-    firebase.database().ref('child/posts').set(this.loveIts);
+  addLove(index: number) {
+    // console.log(index);
+    // console.log(this.posts[index]);
+    this.posts[index].loveIts++;
+    this.savePosts();
+    this.emitPosts();
+    this.getPosts();
+  }
+
+  delLove(index:number) {
+    this.posts[index].loveIts--;
+    this.savePosts();
+    this.emitPosts();
+    this.getPosts();
   }
 
   emitPosts() {
@@ -28,12 +35,11 @@ export class PostsService {
   }
 
   getPosts() {
-    firebase.database().ref('/posts')
-      .on('value', (data) => {
-          this.posts = data.val() ? data.val() : [];
-          this.emitPosts();
-        }
-      );
+    firebase.database().ref('/posts').on('value', 
+      (data) => {
+        this.posts = data.val() ? data.val() : [];
+        this.emitPosts();
+      });
   }
 
   savePosts() {
@@ -48,8 +54,8 @@ export class PostsService {
 
   deletePost(post: Post) {
     const postIndexToRemove = this.posts.findIndex(
-      (postEl) => {
-        if(postEl === post) {
+      (postIndex) => {
+        if(postIndex === post) {
           return true;
         }
       }

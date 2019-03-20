@@ -4,12 +4,27 @@
     <h2>Blog Activité - Ruben</h2>
     <h2>Posts</h2>
         
-      <ul class="list-group">
-        <app-post-list-item *ngFor="let post of posts" 
-                            [title]="post.title"
-                            [content]="post.content"
-                            [created_at]="post.created_at">
-        </app-post-list-item>
+      <ul class="list-group" >
+        <li [ngClass]="{'list-group-item': true,      
+        'list-group-item-success': post.loveIts > 0,
+        'list-group-item-danger': 0 > post.loveIts }" 
+        *ngFor="let post of posts; let index = index">
+
+          <h2>{{ post.title }}
+            <span style="position: absolute; right:10px;" >
+              {{ post.created_at | date: "dd/MM/yyyy, HH:mm" }} 
+            </span>
+          </h2>
+          <p>{{ post.content }}</p>
+      
+          <button class="btn btn-success" (click)="onLoveIt(index)">Love It</button>&nbsp;
+          <button class="btn btn-danger" (click)="onDontLoveIt(index)">Don't Love It</button>
+          <button class="btn btn-danger" (click)="onDeletePost(post)" style="position: absolute; right:10px;">Delete post</button>
+      
+          <span style="position: absolute; right:150px;">
+            <td>💙{{ post.loveIts }}</td> 
+          </span>
+        </li>
       </ul>
 
   </div>

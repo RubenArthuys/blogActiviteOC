@@ -13,6 +13,9 @@ export class NewPostComponent implements OnInit {
 
   postForm: FormGroup;
 
+  date = new Date;
+  timestamp = this.date.getTime()
+
   constructor(private formBuilder: FormBuilder, 
               private postsService: PostsService,
               private router: Router) { }
@@ -31,7 +34,7 @@ export class NewPostComponent implements OnInit {
   onSavePost() {
     const title = this.postForm.get('title').value;
     const content = this.postForm.get('content').value;
-    const newPost = new Post(title, content, 0);
+    const newPost = new Post(title, content, 0, this.timestamp);
    
     this.postsService.addPost(newPost);
     this.router.navigate(['/posts']);

@@ -20,14 +20,12 @@ export class PostsService {
     this.posts[index].loveIts++;
     this.savePosts();
     this.emitPosts();
-    this.getPosts();
   }
 
   delLove(index:number) {
     this.posts[index].loveIts--;
     this.savePosts();
     this.emitPosts();
-    this.getPosts();
   }
 
   emitPosts() {
